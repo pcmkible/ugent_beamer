@@ -1,0 +1,185 @@
+%-----------------------------------------------------------
+%|  _ \_ _/ ___| / ___| |      / \  |_ _|  \/  | ____|  _ \ 
+%| | | | |\___ \| |   | |     / _ \  | || |\/| |  _| | |_) |
+%| |_| | | ___) | |___| |___ / ___ \ | || |  | | |___|  _ < 
+%|____/___|____/ \____|_____/_/   \_\___|_|  |_|_____|_| \_\
+%-----------------------------------------------------------
+
+%This latex template is protected under the copyright laws 
+%of the United States and other countries throughout the world. 
+%Country of first publication: either United States of America,
+%or Belgium. Any unauthorized exhibition, distribution, or 
+%copying of this code or any part thereof (including the not 
+%yet existing soundtrack) may result in civil liability and 
+%criminal prosecution. The story, all names, characters, 
+%and incidents portrayed in this production are fictitious.
+%No identification with actual persons (living or 
+%deceased), places, buildings, and products is intended or 
+%should be inferred. No person or entity associated with this 
+%code received payment or anything of value, or entered into 
+%any agreement, in connection with the depiction of tobacco 
+%products. No animals were harmed in the making of this 
+%latex template. Not.
+%
+%No, this latex template is not perfect.
+%Yes, this latex template is easy to complement.
+
+\RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox}
+\usetikzlibrary{shapes.geometric}
+
+%Color theme
+	\definecolor{UniBlue}{RGB}{30, 100, 200}
+	\definecolor{UniGold}{RGB}{255,210,0} 
+	%Un-used at the moment
+	\definecolor{FacultyColor}{RGB}{74,194,182}
+
+%Font 
+	%Arial font
+	\usepackage{helvet}
+	\renewcommand{\familydefault}{\sfdefault}
+	\renewcommand*\ttdefault{\sfdefault}
+
+	%Sizes 
+	\setbeamerfont{title}{size=\Huge} %Actually these are chapter names..
+	\setbeamerfont{frametitle}{size=\Huge}
+
+	%Colors
+	\setbeamercolor{section page}{fg=UniBlue}
+	\setbeamercolor{title}{fg=white} %Chapter names
+	\setbeamercolor{frametitle}{fg=UniBlue}
+	\setbeamercolor{itemize item}{fg=UniBlue}
+	\setbeamercolor{itemize subsubitem}{fg=UniBlue}
+	\setbeamercolor{enumerate item}{fg=UniBlue}
+
+%Miscelleanous items
+	%No navigation symbols
+	\setbeamertemplate{navigation symbols}{} 
+	%Table of contents (outline) styling
+	\setbeamertemplate{section in toc}{%
+		\hspace{.5cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
+	}
+	\setbeamertemplate{subsection in toc}{%
+		\hspace{1cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
+	}
+	%Frame title alignment
+	\setbeamertemplate{frametitle}[default][left,leftskip=.5cm] 
+	%Lists' styling
+	\setbeamertemplate{items}[square]
+	\setbeamertemplate{itemize subitem}{\tikz{\coordinate[fill, 
+		shape=diamond, color=UniBlue, minimum size=0.2cm, inner sep=0pt];}}
+	\setbeamertemplate{enumerate items}[default]
+
+%Custom commands
+	\newcommand{\drawugentlogo}{
+		\node[anchor=west] (ughentlogo) at (0.65, 0.8cm) 
+			{\includegraphics[height=1.1cm]{graphics/ughent}};
+	}
+	\newcommand{\drawfacultylogo}{
+		\node[inner sep=0pt, anchor=west] at (0.866cm, 8.3cm)
+			{\includegraphics[height=.6cm]{graphics/FacultyLogo}};
+	}
+	
+%Definition of the background: mostly white, with the Ugent logo
+\setbeamertemplate{background}{
+	\begin{tikzpicture}
+		\useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+	\ifnum\thepage>1\relax%
+		% we said mostly white
+	\else % Title page
+		\fill[UniBlue] (0.866cm, 1.62cm) rectangle(\the\paperwidth, 7.7);
+		\drawfacultylogo
+		\drawotherlogos
+	\fi
+	\drawugentlogo
+	\end{tikzpicture}
+}
+
+% Title page (this is out of a tikz picture, so easier to put here)
+\defbeamertemplate*{title page}{ugent}[1][]{
+	\begin{textblock}{200}(6.5,-5.45)
+		\tiny\linespread{1}\color{UniBlue}\insertinstitute
+	\end{textblock}
+
+	\begin{textblock}{200}(0,.8)
+		{\color{white}\fontsize{35}{50}\selectfont\inserttitle}
+	\end{textblock}
+
+	\begin{textblock}{200}(0,5)
+		{\color{UniGold}\insertauthor \\ \insertdate}
+	\end{textblock}
+}
+
+%Page number
+\setbeamertemplate{footline}{
+  \ifnum\thepage>1
+    \begin{textblock*}{0.9cm}(15.1cm, -.6cm)
+      {\color{UniBlue}\tiny\insertframenumber}
+    \end{textblock*}
+  \fi
+}
+
+%Add a special frame when at a new section
+\AtBeginSection[]{ 
+	\begin{frame}
+		\begin{adjustbox}{max totalsize={\paperwidth}{\paperheight}, center}
+			\begin{tikzpicture}
+				\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+			
+				\fill[UniBlue] (0.866, 1.65) rectangle(\the\paperwidth,9.04);
+
+				\node[align=left, anchor=south west,text width=14cm] at (.9cm,2cm)
+				{\usebeamercolor[fg]{title}\usebeamerfont{title}\insertsectionhead};
+
+			\end{tikzpicture}
+		\end{adjustbox}
+\end{frame}
+}
+
+%% Contact form at the end
+\newcommand{\contacts}[5]{   
+	\renewcommand{\insertframenumber}{} %no frame number
+	\begin{frame}
+		\begin{adjustbox}{max totalsize={\paperwidth}{\paperheight}, center} %special layout as for the \section
+			\begin{tikzpicture}
+				%make sure no margins
+				\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight); 
+						
+				\fill[UniBlue] (0.866, 1.65) rectangle(\the\paperwidth, 7.7);
+		
+				\drawfacultylogo
+
+				% title page text elements
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,7.4cm)
+					{\usebeamercolor[fg]{title}\Large\insertauthor};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,6.9cm)
+					{\usebeamercolor[fg]{title}\small{#1}};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,6.1cm)
+					{\usebeamercolor[fg]{title}{#2}};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,5.3cm)
+					{\usebeamercolor[fg]{title}\footnotesize{E\hspace{.25cm}#3}};          
+				
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,4.85cm)
+					{\usebeamercolor[fg]{title}\footnotesize{T\hspace{.25cm}#4}};    
+		
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,4.4cm)
+					{\usebeamercolor[fg]{title}\footnotesize{M\hspace{.25cm}#5}};    
+		
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,3.5cm)
+					{\usebeamercolor[fg]{title}\scriptsize\url{www.ugent.be}};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,6.2cm)
+					{\usebeamercolor[fg]{title}\scriptsize\faFacebookOfficial\hspace{.2cm}Ghent University};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.8cm)
+					{\usebeamercolor[fg]{title}\scriptsize\faTwitterSquare\hspace{.2cm}@ugent};          
+		
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.4cm)
+					{\usebeamercolor[fg]{title}\scriptsize\faLinkedinSquare\hspace{.2cm}Ghent University};          
+				
+			\end{tikzpicture}
+	  \end{adjustbox}
+	\end{frame}
+}
