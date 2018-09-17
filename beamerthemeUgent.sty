@@ -1,28 +1,10 @@
-%-----------------------------------------------------------
-%|  _ \_ _/ ___| / ___| |      / \  |_ _|  \/  | ____|  _ \ 
-%| | | | |\___ \| |   | |     / _ \  | || |\/| |  _| | |_) |
-%| |_| | | ___) | |___| |___ / ___ \ | || |  | | |___|  _ < 
-%|____/___|____/ \____|_____/_/   \_\___|_|  |_|_____|_| \_\
-%-----------------------------------------------------------
-
-%This latex template is protected under the copyright laws 
-%of the United States and other countries throughout the world. 
-%Country of first publication: either United States of America,
-%or Belgium. Any unauthorized exhibition, distribution, or 
-%copying of this code or any part thereof (including the not 
-%yet existing soundtrack) may result in civil liability and 
-%criminal prosecution. The story, all names, characters, 
-%and incidents portrayed in this production are fictitious.
-%No identification with actual persons (living or 
-%deceased), places, buildings, and products is intended or 
-%should be inferred. No person or entity associated with this 
-%code received payment or anything of value, or entered into 
-%any agreement, in connection with the depiction of tobacco 
-%products. No animals were harmed in the making of this 
-%latex template. Not.
-%
-%No, this latex template is not perfect.
-%Yes, this latex template is easy to complement.
+%   ___ _      ______________  __  _______
+%  / _ | | /| / / __/ __/ __ \/  |/  / __/
+% / __ | |/ |/ / _/_\ \/ /_/ / /|_/ / _/  
+%/_/ |_|__/|__/___/___/\____/_/  /_/___/  
+%										
+%No, it's not perfect.
+%Yes, it's easy to complement.
 
 \RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox}
 \usetikzlibrary{shapes.geometric}
@@ -30,8 +12,7 @@
 %Color theme
 	\definecolor{UniBlue}{RGB}{30, 100, 200}
 	\definecolor{UniGold}{RGB}{255,210,0} 
-	%Un-used at the moment
-	\definecolor{FacultyColor}{RGB}{74,194,182}
+	%\definecolor{FacultyColor}{RGB}{74,194,182} %Bioscience engineering (unused)
 
 %Font 
 	%Arial font
@@ -40,7 +21,7 @@
 	\renewcommand*\ttdefault{\sfdefault}
 
 	%Sizes 
-	\setbeamerfont{title}{size=\Huge} %Actually these are chapter names..
+	\setbeamerfont{title}{size=\Huge} %These are chapter names that you see on a \section frame
 	\setbeamerfont{frametitle}{size=\Huge}
 
 	%Colors
@@ -54,22 +35,26 @@
 %Miscelleanous items
 	%No navigation symbols
 	\setbeamertemplate{navigation symbols}{} 
-	%Table of contents (outline) styling
+	%Table of contents styling
 	\setbeamertemplate{section in toc}{%
+		%Make a blue square instead of dots
 		\hspace{.5cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
 	}
 	\setbeamertemplate{subsection in toc}{%
+		%Make a blue square instead of dots
 		\hspace{1cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
 	}
-	%Frame title alignment
+	%Frame title text alignment
 	\setbeamertemplate{frametitle}[default][left,leftskip=.5cm] 
-	%Lists' styling
+	%Lists' styling (I want squares)
 	\setbeamertemplate{items}[square]
+	%but you can make them different, e.g. diamonds
 	\setbeamertemplate{itemize subitem}{\tikz{\coordinate[fill, 
 		shape=diamond, color=UniBlue, minimum size=0.2cm, inner sep=0pt];}}
-	\setbeamertemplate{enumerate items}[default]
+	%enumerates will be just numbers, without styling
+	\setbeamertemplate{enumerate items}[default] 
 
-%Custom commands
+%Custom commands for things we're gonna call
 	\newcommand{\drawugentlogo}{
 		\node[anchor=west] (ughentlogo) at (0.65, 0.8cm) 
 			{\includegraphics[height=1.1cm]{graphics/ughent}};
@@ -83,14 +68,15 @@
 \setbeamertemplate{background}{
 	\begin{tikzpicture}
 		\useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
-	\ifnum\thepage>1\relax%
-		% we said mostly white
-	\else % Title page
-		\fill[UniBlue] (0.866cm, 1.62cm) rectangle(\the\paperwidth, 7.7);
-		\drawfacultylogo
-		\drawotherlogos
-	\fi
-	\drawugentlogo
+		\drawugentlogo
+
+		\ifnum\thepage>1\relax%
+			% nothing specific on non-title pages
+		\else % Title page
+			\fill[UniBlue] (0.866cm, 1.62cm) rectangle(\the\paperwidth, 7.7);
+			\drawfacultylogo
+			\drawotherlogos
+		\fi
 	\end{tikzpicture}
 }
 
@@ -135,7 +121,7 @@
 \end{frame}
 }
 
-%% Contact form at the end
+%% Contact form at the end (watch your eyes)
 \newcommand{\contacts}[5]{   
 	\renewcommand{\insertframenumber}{} %no frame number
 	\begin{frame}
