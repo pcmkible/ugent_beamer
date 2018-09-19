@@ -3,11 +3,10 @@
 % / __ | |/ |/ / _/_\ \/ /_/ / /|_/ / _/  
 %/_/ |_|__/|__/___/___/\____/_/  /_/___/  
 %										
-%No, it's not perfect.
-%Yes, it's easy to complement.
+%It's not perfect, it's simple.
 
-\RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox}
-\usetikzlibrary{shapes.geometric}
+\RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox,ulem}
+\usetikzlibrary{shapes.geometric, matrix, positioning}
 
 %Color theme
 	\definecolor{UniBlue}{RGB}{30, 100, 200}
@@ -22,7 +21,7 @@
 
 	%Sizes 
 	\setbeamerfont{title}{size=\Huge} %These are chapter names that you see on a \section frame
-	\setbeamerfont{frametitle}{size=\Huge}
+	\setbeamerfont{frametitle}{size=\huge}
 
 	%Colors
 	\setbeamercolor{section page}{fg=UniBlue}
@@ -44,8 +43,12 @@
 		%Make a blue square instead of dots
 		\hspace{1cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
 	}
-	%Frame title text alignment
-	\setbeamertemplate{frametitle}[default][left,leftskip=.5cm] 
+	%Frame's title text alignment
+	\setbeamertemplate{frametitle}{
+		\renewcommand{\ULthickness}{1pt}
+		\vspace*{.3cm}
+		\uline{\insertframetitle}
+	}
 	%Lists' styling (I want squares)
 	\setbeamertemplate{items}[square]
 	%but you can make them different, e.g. diamonds
@@ -86,8 +89,9 @@
 		\tiny\linespread{1}\color{UniBlue}\insertinstitute
 	\end{textblock}
 
-	\begin{textblock}{200}(0,.8)
-		{\color{white}\fontsize{35}{50}\selectfont\inserttitle}
+	\renewcommand{\ULthickness}{2pt}
+	\begin{textblock}{200}(0,.5)
+		{\color{white}\fontsize{35}{50}\selectfont\uline{\inserttitle}}
 	\end{textblock}
 
 	\begin{textblock}{200}(0,5)
@@ -107,18 +111,23 @@
 %Add a special frame when at a new section
 \AtBeginSection[]{ 
 	\begin{frame}
+		%Re-draw the background
 		\begin{adjustbox}{max totalsize={\paperwidth}{\paperheight}, center}
 			\begin{tikzpicture}
 				\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-			
 				\fill[UniBlue] (0.866, 1.65) rectangle(\the\paperwidth,9.04);
-
-				\node[align=left, anchor=south west,text width=14cm] at (.9cm,2cm)
-				{\usebeamercolor[fg]{title}\usebeamerfont{title}\insertsectionhead};
-
 			\end{tikzpicture}
 		\end{adjustbox}
-\end{frame}
+
+		%Place the chapter's title
+		\renewcommand{\ULthickness}{1.5pt}
+		\begin{textblock}{200}(0,-5)
+			\usebeamercolor[fg]{title}
+			\usebeamerfont{title}
+			\uline{\insertsectionhead}
+		\end{textblock}
+
+	\end{frame}
 }
 
 %% Contact form at the end (watch your eyes)
@@ -135,36 +144,39 @@
 				\drawfacultylogo
 
 				% title page text elements
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,7.4cm)
+				\node[align=left, anchor=north west] at (1.2cm,7.4cm)
 					{\usebeamercolor[fg]{title}\Large\insertauthor};          
 		
 				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,6.9cm)
 					{\usebeamercolor[fg]{title}\small{#1}};          
 		
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,6.1cm)
+				\node[align=left, anchor=north west] at (1.2cm,6.1cm)
 					{\usebeamercolor[fg]{title}{#2}};          
 		
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,5.3cm)
-					{\usebeamercolor[fg]{title}\footnotesize{E\hspace{.25cm}#3}};          
-				
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,4.85cm)
-					{\usebeamercolor[fg]{title}\footnotesize{T\hspace{.25cm}#4}};    
-		
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,4.4cm)
-					{\usebeamercolor[fg]{title}\footnotesize{M\hspace{.25cm}#5}};    
-		
-				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,3.5cm)
-					{\usebeamercolor[fg]{title}\scriptsize\url{www.ugent.be}};          
-		
-				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,6.2cm)
+				%Contact details: mail, phones
+				\matrix [matrix of nodes, anchor=north west,
+					row sep=-.1cm, column sep = .5 cm, ampersand replacement=\&,
+					text=white, font=\footnotesize,  
+					column 2/.style={anchor=base west}] at (1.05cm,5.4cm) {
+					E \& #3 \\ 
+					T \& #4 \\ 
+					M \& #5 \\ 
+				};
+			
+				%Social media logos
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,6.1cm)
 					{\usebeamercolor[fg]{title}\scriptsize\faFacebookOfficial\hspace{.2cm}Ghent University};          
-		
-				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.8cm)
+
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.7cm)
 					{\usebeamercolor[fg]{title}\scriptsize\faTwitterSquare\hspace{.2cm}@ugent};          
 		
-				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.4cm)
+				\node[align=left, anchor=north west,text width=14cm] at (7.9cm,5.3cm)
 					{\usebeamercolor[fg]{title}\scriptsize\faLinkedinSquare\hspace{.2cm}Ghent University};          
 				
+				%url (clickable!)
+				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,3.5cm)
+					{\usebeamercolor[fg]{title}\scriptsize\url{www.ugent.be}};          
+
 			\end{tikzpicture}
 	  \end{adjustbox}
 	\end{frame}
