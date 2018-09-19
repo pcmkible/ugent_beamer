@@ -3,21 +3,12 @@
 \usepackage[T1]{fontenc}
 \usepackage{lipsum, lmodern}
 
-\usetheme{Ugent}
- 
+\usetheme{Ugent} 
+
 \title{Latex beamer:\\ A new template}           
 \date{\today}
 \author{Michel TheMan}
 \institute{\textbf{Department of Environment}\\Laboratory of Wood Technology, UGent-Woodlab }
-
-%TODO: make it take arguments, and automatically place evenly spaced pics 1,2,3?
-\newcommand{\drawotherlogos}{
-	\node[inner sep=0pt, anchor=west] at (4, 0.8cm)
-		{\includegraphics[height=1.1cm]{graphics/woodlab}};
-
-	\node[inner sep=0pt, anchor=west] at (9, 0.8cm)
-		{\includegraphics[height=1.1cm]{graphics/ugct}};
-}
 
 \begin{document}
 \frame{\titlepage} 
@@ -27,7 +18,7 @@
  
 \section{Introduction}
 \subsection{Introduction}
-
+  
 \begin{frame}[fragile, t]{Itemize}    
 \begin{itemize}
 \item Here you can see an itemization
@@ -50,12 +41,11 @@
 	f(x)=\sum_{i=0}^\infty \frac{f^{(i)}(x_0)}{i!}(x-x_0)^i
 \]
 \end{frame}
- 
-\section{Introduction2}    
+  
+\section{Introduction2}     
    
-
 \begin{frame}[t]{Plain frame with title}
-\lipsum[1]
+\lipsum[1] 
 \end{frame}
 
 \contacts{Send me donations, not questions}{Department of Environment}	

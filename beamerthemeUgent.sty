@@ -3,10 +3,12 @@
 % / __ | |/ |/ / _/_\ \/ /_/ / /|_/ / _/  
 %/_/ |_|__/|__/___/___/\____/_/  /_/___/  
 %										
-%It's not perfect, it's simple.
+%It's not perfect, but I made it simple.
+%What to know: 
+% -put brackets around what you add.
 
 \RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox,ulem}
-\usetikzlibrary{shapes.geometric, matrix, positioning}
+\usetikzlibrary{shapes.geometric, matrix}
 
 %Color theme
 	\definecolor{UniBlue}{RGB}{30, 100, 200}
@@ -24,12 +26,14 @@
 	\setbeamerfont{frametitle}{size=\huge}
 
 	%Colors
+	\setbeamercolor{normal text}{fg=black}
 	\setbeamercolor{section page}{fg=UniBlue}
 	\setbeamercolor{title}{fg=white} %Chapter names
 	\setbeamercolor{frametitle}{fg=UniBlue}
 	\setbeamercolor{itemize item}{fg=UniBlue}
 	\setbeamercolor{itemize subsubitem}{fg=UniBlue}
 	\setbeamercolor{enumerate item}{fg=UniBlue}
+	\setbeamercolor{item}{fg=black}
 
 %Miscelleanous items
 	%No navigation symbols
@@ -66,6 +70,16 @@
 		\node[inner sep=0pt, anchor=west] at (0.866cm, 8.3cm)
 			{\includegraphics[height=.6cm]{graphics/FacultyLogo}};
 	}
+
+%TODO: make it take arguments, and automatically place evenly spaced pics 1,2,3?
+\newcommand{\drawotherlogos}{
+	\node[inner sep=0pt, anchor=west] at (4, 0.8cm)
+		{\includegraphics[height=1.1cm]{graphics/woodlab}};
+
+	\node[inner sep=0pt, anchor=west] at (9, 0.8cm)
+		{\includegraphics[height=1.1cm]{graphics/ugct}};
+}
+
 	
 %Definition of the background: mostly white, with the Ugent logo
 \setbeamertemplate{background}{
@@ -122,9 +136,9 @@
 		%Place the chapter's title
 		\renewcommand{\ULthickness}{1.5pt}
 		\begin{textblock}{200}(0,-5)
-			\usebeamercolor[fg]{title}
+			{\usebeamercolor[fg]{title}
 			\usebeamerfont{title}
-			\uline{\insertsectionhead}
+			\uline{\insertsectionhead}}
 		\end{textblock}
 
 	\end{frame}
