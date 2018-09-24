@@ -3,7 +3,7 @@
 % / __ | |/ |/ / _/_\ \/ /_/ / /|_/ / _/  
 %/_/ |_|__/|__/___/___/\____/_/  /_/___/  
 %										
-%It's not perfect, but I made it simple.
+%It's not perfect, but I think it's simple.
 %What to know: 
 % -put brackets around what you add.
 
@@ -22,7 +22,7 @@
 	\renewcommand*\ttdefault{\sfdefault}
 
 	%Sizes 
-	\setbeamerfont{title}{size=\Huge} %These are chapter names that you see on a \section frame
+	\setbeamerfont{title}{size=\fontsize{45}{50}} %These are chapter names that you see on a \section frame
 	\setbeamerfont{frametitle}{size=\huge}
 
 	%Colors
@@ -79,7 +79,6 @@
 	\node[inner sep=0pt, anchor=west] at (9, 0.8cm)
 		{\includegraphics[height=1.1cm]{graphics/ugct}};
 }
-
 	
 %Definition of the background: mostly white, with the Ugent logo
 \setbeamertemplate{background}{
@@ -104,8 +103,9 @@
 	\end{textblock}
 
 	\renewcommand{\ULthickness}{2pt}
-	\begin{textblock}{200}(0,.5)
-		{\color{white}\fontsize{35}{50}\selectfont\uline{\inserttitle}}
+	\begin{textblock}{200}(0,0)
+		{\color{white}\fontsize{35}{60}\selectfont
+		\uline{\inserttitle}}
 	\end{textblock}
 
 	\begin{textblock}{200}(0,5)
@@ -134,8 +134,8 @@
 		\end{adjustbox}
 
 		%Place the chapter's title
-		\renewcommand{\ULthickness}{1.5pt}
-		\begin{textblock}{200}(0,-5)
+		\renewcommand{\ULthickness}{3pt}
+		\begin{textblock}{200}(0,-6.5)
 			{\usebeamercolor[fg]{title}
 			\usebeamerfont{title}
 			\uline{\insertsectionhead}}
