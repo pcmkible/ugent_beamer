@@ -1,13 +1,10 @@
-%   ___ _      ______________  __  _______
-%  / _ | | /| / / __/ __/ __ \/  |/  / __/
-% / __ | |/ |/ / _/_\ \/ /_/ / /|_/ / _/  
-%/_/ |_|__/|__/___/___/\____/_/  /_/___/  
-%										
-%It's not perfect, but I think it's simple.
-%What to know: 
-% -put brackets around what you add.
+%I tried to keep it simple. 
+%It's very much artisanal
+%What to know for modifications: 
+% -put brackets around what you add
+% -you're a welcome contributor
 
-\RequirePackage{tikz, xcolor, textpos, fontawesome, adjustbox,ulem}
+\RequirePackage{tikz, textpos, fontawesome, adjustbox, ulem, soul}
 \usetikzlibrary{shapes.geometric, matrix}
 
 %Color theme
@@ -21,9 +18,15 @@
 	\renewcommand{\familydefault}{\sfdefault}
 	\renewcommand*\ttdefault{\sfdefault}
 
-	%Sizes 
-	\setbeamerfont{title}{size=\fontsize{45}{50}} %These are chapter names that you see on a \section frame
-	\setbeamerfont{frametitle}{size=\huge}
+	%Sizes (when \fontsize, the first number is the font size in MS PowerPoint / 3, and the second is supposed to be line spacing but doesnt work)
+	\setbeamerfont{title}{size=\fontsize{33.3}{60}} %These are also chapter names that you see on a \section frame
+	\setbeamerfont{frametitle}{size=\fontsize{18}{50}}
+	\setbeamerfont{author}{size=\fontsize{10}{55}}
+	\setbeamerfont*{itemize/enumerate body}{size=\Large}
+	\setbeamerfont*{itemize/enumerate subbody}{parent=itemize/enumerate body}
+	\setbeamerfont*{itemize/enumerate subsubbody}{parent=itemize/enumerate body}
+	\setbeamerfont{normal text}{size=\fontsize{16}{20}}
+	\AtBeginDocument{\usebeamerfont{normal text}}
 
 	%Colors
 	\setbeamercolor{normal text}{fg=black}
@@ -41,25 +44,24 @@
 	%Table of contents styling
 	\setbeamertemplate{section in toc}{%
 		%Make a blue square instead of dots
-		\hspace{.5cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
+		\hspace{.5cm}\color{UniBlue}--~\inserttocsection
 	}
 	\setbeamertemplate{subsection in toc}{%
 		%Make a blue square instead of dots
-		\hspace{1cm}\color{UniBlue}\rule[.04cm]{5pt}{5pt}~\inserttocsection
+		\hspace{1cm}\color{UniBlue}--~\inserttocsection
 	}
 	%Frame's title text alignment
 	\setbeamertemplate{frametitle}{
-		\renewcommand{\ULthickness}{1pt}
-		\vspace*{.3cm}
+		\renewcommand{\ULthickness}{1.75pt}
+		\vspace*{.2cm}
+		\hspace*{-.3cm}
 		\uline{\insertframetitle}
+		\vspace*{-.2cm}
 	}
 	%Lists' styling (I want squares)
-	\setbeamertemplate{items}[square]
-	%but you can make them different, e.g. diamonds
-	\setbeamertemplate{itemize subitem}{\tikz{\coordinate[fill, 
-		shape=diamond, color=UniBlue, minimum size=0.2cm, inner sep=0pt];}}
+	\setbeamertemplate{items}{\color{UniBlue}--}
 	%enumerates will be just numbers, without styling
-	\setbeamertemplate{enumerate items}[default] 
+	\setbeamertemplate{enumerate items}[default]
 
 %Custom commands for things we're gonna call
 	\newcommand{\drawugentlogo}{
@@ -97,19 +99,22 @@
 }
 
 % Title page (this is out of a tikz picture, so easier to put here)
-\defbeamertemplate*{title page}{ugent}[1][]{
+\defbeamertemplate*{title page}{ugent}[1][]{%
 	\begin{textblock}{200}(6.5,-5.45)
-		\tiny\linespread{1}\color{UniBlue}\insertinstitute
-	\end{textblock}
+		{\tiny\color{UniBlue}\insertinstitute}	
+	\end{textblock}%
 
-	\renewcommand{\ULthickness}{2pt}
-	\begin{textblock}{200}(0,0)
-		{\color{white}\fontsize{35}{60}\selectfont
-		\uline{\inserttitle}}
-	\end{textblock}
+	\sbox0{\hbox{\parbox[t]{12cm}{% Here is the magic, save all in box 0
+    \usebeamerfont{title}\usebeamercolor[fg]{title}\setlength{\baselineskip}{1.3em}% manipulate \baselineskip manually
+	\setul{.15ex}{3pt}% set underline depth to .3ex and line thickness to 2pt (soul package)
+	\expandafter\ul\expandafter{\inserttitle}\par
+	}}}
+	\begin{textblock*}{\linewidth}(.3cm,\dimexpr50pt-\ht0-\dp0\relax)% Using height and depth of box 0
+	  \usebox0% put the content in here
+	\end{textblock*}
 
-	\begin{textblock}{200}(0,5)
-		{\color{UniGold}\insertauthor \\ \insertdate}
+	\begin{textblock}{200}(0.3,4.5)
+		{\color{UniGold}\usebeamerfont{author}\insertauthor \\\vspace{-.25cm} \insertdate}
 	\end{textblock}
 }
 
@@ -117,7 +122,7 @@
 \setbeamertemplate{footline}{
   \ifnum\thepage>1
     \begin{textblock*}{0.9cm}(15.1cm, -.6cm)
-      {\color{UniBlue}\tiny\insertframenumber}
+      {\tiny\color{UniBlue}\tiny\insertframenumber}
     \end{textblock*}
   \fi
 }
@@ -135,7 +140,7 @@
 
 		%Place the chapter's title
 		\renewcommand{\ULthickness}{3pt}
-		\begin{textblock}{200}(0,-6.5)
+		\begin{textblock}{200}(.2,-5.9)
 			{\usebeamercolor[fg]{title}
 			\usebeamerfont{title}
 			\uline{\insertsectionhead}}
@@ -159,17 +164,17 @@
 
 				% title page text elements
 				\node[align=left, anchor=north west] at (1.2cm,7.4cm)
-					{\usebeamercolor[fg]{title}\Large\insertauthor};          
+					{\usebeamercolor[fg]{title}\insertauthor};          
 		
 				\node[align=left, anchor=north west,text width=14cm] at (1.2cm,6.9cm)
-					{\usebeamercolor[fg]{title}\small{#1}};          
+					{\usebeamercolor[fg]{title}\footnotesize{#1}};          
 		
 				\node[align=left, anchor=north west] at (1.2cm,6.1cm)
-					{\usebeamercolor[fg]{title}{#2}};          
+					{\usebeamercolor[fg]{title}\small{#2}};          
 		
 				%Contact details: mail, phones
 				\matrix [matrix of nodes, anchor=north west,
-					row sep=-.1cm, column sep = .5 cm, ampersand replacement=\&,
+					row sep=-.2cm, column sep = .05 cm, ampersand replacement=\&,
 					text=white, font=\footnotesize,  
 					column 2/.style={anchor=base west}] at (1.05cm,5.4cm) {
 					E \& #3 \\ 
