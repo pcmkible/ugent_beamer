@@ -33,9 +33,9 @@
 	\setbeamercolor{section page}{fg=UniBlue}
 	\setbeamercolor{title}{fg=white} %Chapter names
 	\setbeamercolor{frametitle}{fg=UniBlue}
-	\setbeamercolor{itemize item}{fg=UniBlue}
-	\setbeamercolor{itemize subsubitem}{fg=UniBlue}
-	\setbeamercolor{enumerate item}{fg=UniBlue}
+	\setbeamercolor{itemize item}{fg=black}
+	\setbeamercolor{itemize subsubitem}{fg=black}
+	\setbeamercolor{enumerate item}{fg=black}
 	\setbeamercolor{item}{fg=black}
 
 %Miscelleanous items
@@ -48,18 +48,18 @@
 	}
 	\setbeamertemplate{subsection in toc}{%
 		%Make a blue square instead of dots
-		\hspace{1cm}\color{UniBlue}--~\inserttocsection
+		\hspace{1cm}\color{UniBlue}--~\inserttocsubsection
 	}
 	%Frame's title text alignment
 	\setbeamertemplate{frametitle}{
 		\renewcommand{\ULthickness}{1.75pt}
 		\vspace*{.2cm}
 		\hspace*{-.3cm}
-		\uline{\insertframetitle}
+		\MakeUppercase{\uline{\insertframetitle}}
 		\vspace*{-.2cm}
 	}
 	%Lists' styling (I want squares)
-	\setbeamertemplate{items}{\color{UniBlue}--}
+	\setbeamertemplate{items}{\color{black}--}
 	%enumerates will be just numbers, without styling
 	\setbeamertemplate{enumerate items}[default]
 
@@ -104,16 +104,16 @@
 		{\tiny\color{UniBlue}\insertinstitute}	
 	\end{textblock}%
 
-	\sbox0{\hbox{\parbox[t]{12cm}{% Here is the magic, save all in box 0
-    \usebeamerfont{title}\usebeamercolor[fg]{title}\setlength{\baselineskip}{1.3em}% manipulate \baselineskip manually
+	\sbox0{\hbox{\parbox[t]{13cm}{% Here is the magic, save all in box 0
+    \usebeamerfont{title}\usebeamercolor[fg]{title}\setlength{\baselineskip}{1.1em}% manipulate \baselineskip manually
 	\setul{.15ex}{3pt}% set underline depth to .3ex and line thickness to 2pt (soul package)
-	\expandafter\ul\expandafter{\inserttitle}\par
+	\MakeUppercase{\expandafter\ul\expandafter{\inserttitle}}\par
 	}}}
-	\begin{textblock*}{\linewidth}(.3cm,\dimexpr50pt-\ht0-\dp0\relax)% Using height and depth of box 0
+	\begin{textblock*}{\linewidth}(.3cm,\dimexpr65pt-\ht0-\dp0\relax)% Using height and depth of box 0
 	  \usebox0% put the content in here
 	\end{textblock*}
 
-	\begin{textblock}{200}(0.3,4.5)
+	\begin{textblock}{200}(0.3,4.75)
 		{\color{UniGold}\usebeamerfont{author}\insertauthor \\\vspace{-.25cm} \insertdate}
 	\end{textblock}
 }
@@ -143,7 +143,7 @@
 		\begin{textblock}{200}(.2,-5.9)
 			{\usebeamercolor[fg]{title}
 			\usebeamerfont{title}
-			\uline{\insertsectionhead}}
+			\MakeUppercase{\uline{\insertsectionhead}}}
 		\end{textblock}
 
 	\end{frame}
